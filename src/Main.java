@@ -5,8 +5,8 @@ import java.sql.*;
 public class Main {
     public static void main(String[] args) {
         Connection myCon = null;
-        Statement myStmt = null;
-        ResultSet rs = null;
+        PreparedStatement myStmt = null;
+        //ResultSet rs == null;
 
         try{
             myCon= DriverManager.getConnection("jdbc:mysql://localhost:3306/project","root","jhimy");
