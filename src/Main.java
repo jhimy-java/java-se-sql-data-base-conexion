@@ -5,23 +5,22 @@ import java.sql.*;
 public class Main {
     public static void main(String[] args) {
         Connection myCon = null;
-        PreparedStatement myStmt = null;
-        //ResultSet rs == null;
+        Statement myStmt = null;
+        ResultSet myRes = null;
 
         try{
             myCon= DriverManager.getConnection("jdbc:mysql://localhost:3306/project","root","jhimy");
             System.out.println("Conexion establecida");
 
-            String sql=("INSERT INTO employees (first_name, pa_surname) VALUES (?, ?)");
-            myStmt = myCon.prepareStatement(sql);
+            myStmt=myCon.createStatement();
 
-            myStmt.setString(1,"Johana");
-            myStmt.setString(2,"Smith");
+            int rowsAffected = myStmt.executeUpdate("UPDATE employees "+ "set email='johanador@exmple.com' "+"WHERE first_name='Johana'");
+            //int rowsAffected = myStmt.executeUpdate("DELETE FROM employees " + "WHERE first_name='Johana'");
 
-            int rowsAffected = myStmt.executeUpdate();
+            myRes=myStmt.executeQuery("SELECT * FROM employees order by pa_surname");
 
-            if(rowsAffected>0){
-                System.out.println("Se ha creado un nuevo cliente");
+            while (myRes.next()){
+                System.out.println(myRes.getString("first_name") + "," + myRes.getString("email"));
             }
         } catch (Exception e) {
             e.printStackTrace();
